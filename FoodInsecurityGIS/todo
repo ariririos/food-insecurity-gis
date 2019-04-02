@@ -1,0 +1,29 @@
+# Visualization
+[ ] Figure out how to make it clearer/less cluttered
+[ ] Filtering and layers
+    [ ] Select individual layers
+    [ ] Select individual food sources (and show all paths from households)
+    [ ] Select individual households (and show all paths to food sources)
+[ ] Heatmaps
+    [ ] As separate option
+[ ] 3D??
+
+# Graphs
+[ ] Rasterize households into neighborhoods or by no. of units
+    [ ] Figure out visualization for rasterized households
+
+# Data
+[ ] Quality of food source metric
+[ ] Data for households:
+    [ ] Private mobility
+    [ ] Poverty/income
+    [ ] SNAP eligibility
+    [ ] Free and Reduced Lunch usage
+    [ ] Demographics (race, language)
+[ ] Data for food sources:
+    [ ] (^) food quality metric
+    [ ] Hours
+    [ ] Selection
+    [ ] Price range
+[ ] Get names/addresses of all buildings
+    [ ] Tooltips over individual buildings/areas to show name/address

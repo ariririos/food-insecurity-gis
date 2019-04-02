@@ -18,7 +18,7 @@ HScrollbar zSlider;
 boolean perspective = false;
 
 void setup() {
-  size(800, 800, P3D);
+  size(800, 800);
   //fullScreen();
   // map = new MercatorMap(width, height, 27.6432, 27.0969, -81.2132, -80.6735, 0);
   // just city limits:
@@ -28,34 +28,40 @@ void setup() {
   map = new MercatorMap(width, height, 27.24690, 27.23614, -80.83949, -80.82006, 0);
   loadData();
   parseData();
-  //waysNetwork(ways);
-  //allPaths();
+  waysNetwork(ways);
+  allPaths();
   //println(paths);
-  xSlider = new HScrollbar(10, 25, 200, 16, 16);
-  ySlider = new HScrollbar(10, 50, 200, 16, 16);
-  zSlider = new HScrollbar(10, 75, 200, 16, 16);
+  //xSlider = new HScrollbar(10, 25, 200, 16, 16);
+  //ySlider = new HScrollbar(10, 50, 200, 16, 16);
+  //zSlider = new HScrollbar(10, 75, 200, 16, 16);
 }
 
 void draw() {
-  background(75, 75, 75);
-  lights();
+  background(0, 0, 0);
+  // lights();
   for (int i = 0; i < foodSources.size(); i++) {
-    foodSources.get(i).draw3D();
+    foodSources.get(i).draw2D();
   }
   for (int i = 0; i < households.size(); i++) {
-    households.get(i).draw3D();
+    households.get(i).draw2D();
   }
-  camera();
-  xSlider.update();
-  xSlider.display();
-  ySlider.update();
-  ySlider.display();
-  zSlider.update();
-  zSlider.display();
-  float eyeX = xSlider.getPos()/200;
-  float eyeY = ySlider.getPos()/200;
-  float eyeZ = zSlider.getPos();
-  camera(width * eyeX, height * eyeY, 5.0*eyeZ, width/2.0, height/2.0, 0, 0, 1, 0);
+  for (int i = 0; i < ways.size(); i++) {
+    ways.get(i).draw();
+  }
+  for (int i = 0; i < paths.size(); i++) {
+   paths.get(i).display(100, 50);
+  }
+  //camera();
+  //xSlider.update();
+  //xSlider.display();
+  //ySlider.update();
+  //ySlider.display();
+  //zSlider.update();
+  //zSlider.display();
+  //float eyeX = xSlider.getPos()/200;
+  //float eyeY = ySlider.getPos()/200;
+  //float eyeZ = zSlider.getPos();
+  //camera(width * eyeX, height * eyeY, 5.0*eyeZ, width/2.0, height/2.0, 0, 0, 1, 0);
   //for (int i = 0; i < ways.size(); i++) {
   //  ways.get(i).draw3D();
   //}
@@ -70,10 +76,7 @@ void draw() {
   ////camera(0.0, 0.0, 5.0*eyeZ, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0);
 
   
-  //for (int i = 0; i < paths.size(); i++) {
-  //  paths.get(i).display(100, 50);
-  //  println(paths.get(i).getTotalLength());
-  //}
+  
 }
 
 //void keyPressed() {

@@ -94,19 +94,16 @@ void parseData() {
   /* Load in all households */
   for (int i = 0; i < householdFeatures.size(); i++) {
     ArrayList<PVector> coords = new ArrayList<PVector>();
-    try {
-      JSONArray coordinates = householdFeatures.getJSONObject(i).getJSONArray("polygonCoords");
-      for(int j = 0; j < coordinates.size(); j++) {
-        float lat = coordinates.getJSONArray(j).getFloat(1);
-        float lon = coordinates.getJSONArray(j).getFloat(0);
-        //Make a PVector and add it
-        PVector coordinate = new PVector(lat, lon);
-        coords.add(coordinate);
-      }
-      Household house = new Household(coords);
-      households.add(house);
+    JSONArray coordinates = householdFeatures.getJSONObject(i).getJSONArray("polygonCoords");
+    for(int j = 0; j < coordinates.size(); j++) {
+      float lat = coordinates.getJSONArray(j).getFloat(1);
+      float lon = coordinates.getJSONArray(j).getFloat(0);
+      //Make a PVector and add it
+      PVector coordinate = new PVector(lat, lon);
+      coords.add(coordinate);
     }
-    catch (Exception e) { }
+    Household house = new Household(coords);
+    households.add(house);
   }
 }
 
@@ -131,10 +128,14 @@ void allPaths() {
    
   paths = new ArrayList<Path>();
   for (int i = 0; i < households.size(); i++) {
-    for (int j = 0; j < foodSources.size(); j++) {
-      Path p = new Path(map.getScreenLocation(households.get(i).getFirstCoords()), map.getScreenLocation(foodSources.get(j).getFirstCoords()));
-      p.solve(finder);
-      paths.add(p);
+    int mod = i % 100;
+    if (mod == 0) { // FIXME: only using 1 of every 100 households
+      for (int j = 0; j < foodSources.size(); j++) {
+        Path p = new Path(map.getScreenLocation(households.get(i).getFirstCoords()), map.getScreenLocation(foodSources.get(j).getFirstCoords()));
+        p.solve(finder);
+        paths.add(p);
+        println("added path b/w " + i + " and " + j);
+      }
     }
   } 
   //finder.display(#ff0000, 1, true);
