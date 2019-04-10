@@ -12,9 +12,9 @@ class Heatmap {
     cellY = _cellY;
     cellW = _cellW;
     cellH = _cellH;
-    worst = color(200, 0, 0);
-    mid = color(255, 255, 0);
-    best = color(0, 200, 0);
+    worst = color(200, 0, 0, 75);
+    mid = color(255, 255, 0, 75);
+    best = color(0, 200, 0, 75);
     scores = new float[cellX][cellY];
     p = createGraphics(int(cellX*cellW), int(cellY*cellH));
   }

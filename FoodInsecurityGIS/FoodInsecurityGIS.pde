@@ -1,3 +1,5 @@
+import java.util.Collections;
+
 MercatorMap map;
 PImage background;
 ArrayList<FoodSource> foodSources = new ArrayList<FoodSource>();
@@ -16,6 +18,7 @@ HScrollbar xSlider;
 HScrollbar ySlider;
 HScrollbar zSlider;
 boolean perspective = false;
+Heatmap hm;
 
 void setup() {
   size(800, 800);
@@ -25,11 +28,12 @@ void setup() {
   //map = new MercatorMap(width, height, 27.2589, 27.2233, -80.8649, -80.7973, 0);
   // just city center:
   //map = new MercatorMap(width, height, 27.6477, 26.9595, -81.4650, -80.2215, 0);
-  map = new MercatorMap(width, height, 27.24690, 27.23614, -80.83949, -80.82006, 0);
+  map = new MercatorMap(width, height, 27.2982, 27.1897, -80.8935, -80.7525, 0);
   loadData();
   parseData();
-  waysNetwork(ways);
-  allPaths();
+  loadHeatmap();
+  // waysNetwork(ways);
+  // allPaths();
   //println(paths);
   //xSlider = new HScrollbar(10, 25, 200, 16, 16);
   //ySlider = new HScrollbar(10, 50, 200, 16, 16);
@@ -38,6 +42,7 @@ void setup() {
 
 void draw() {
   background(0, 0, 0);
+  
   // lights();
   for (int i = 0; i < foodSources.size(); i++) {
     foodSources.get(i).draw2D();
@@ -48,9 +53,25 @@ void draw() {
   for (int i = 0; i < ways.size(); i++) {
     ways.get(i).draw();
   }
-  for (int i = 0; i < paths.size(); i++) {
-   paths.get(i).display(100, 50);
-  }
+  image(hm.p, 0, 0);
+  // for (int i = 0; i < paths.size(); i++) {
+  //  paths.get(i).display(100, 50);
+  // }
+
+  /*
+    heatmap usage:
+    hm = new Heatmap(numX, numY, cellW, cellH)
+    float[][] data = new float[numX][numY]
+    hm.scores = data;
+    hm.normalizeScores();
+    hm.draw();
+    
+    data format:
+    [0][0]||[1][0]
+    --------------
+    [0][1]||[1][1]
+  */
+
   //camera();
   //xSlider.update();
   //xSlider.display();

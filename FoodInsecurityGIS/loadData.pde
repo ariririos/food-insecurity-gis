@@ -140,3 +140,13 @@ void allPaths() {
   } 
   //finder.display(#ff0000, 1, true);
 }
+
+void loadHeatmap() {
+  int blocks = 200;
+  // numX, numY, width, height
+  hm = new Heatmap(blocks, blocks, width / blocks, height / blocks);
+  float[][] dists = calculateAllDistances(blocks, blocks);
+  hm.scores = dists;
+  hm.normalizeScores();
+  hm.draw();
+}

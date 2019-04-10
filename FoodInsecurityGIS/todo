@@ -20,6 +20,7 @@
     [ ] SNAP eligibility
     [ ] Free and Reduced Lunch usage
     [ ] Demographics (race, language)
+    [ ] Migrant farmworker children population
 [ ] Data for food sources:
     [ ] (^) food quality metric
     [ ] Hours
@@ -27,3 +28,15 @@
     [ ] Price range
 [ ] Get names/addresses of all buildings
     [ ] Tooltips over individual buildings/areas to show name/address
+
+[ ] pixels per meter per degree
+[ ] meters per degree
+    [ ] spherical geometry equation
+[ ] data cleaning tool - getClosestFeatureToCursor
+[ ] Heatmap 
+    [ ] discrete score per distance to food source
+[ ] data input
+    [ ] give the schools the ability to input the students' data
+[ ] stat analysis
+    [ ] matching f(x, y) to a student and seeing if they're above some "food insecure" threshold
+    [ ] fuzzy it a bit to keep it anonymous

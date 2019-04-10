@@ -21,7 +21,7 @@ class Household {
     p2D.beginShape();
     p2D.fill(fill);
     p2D.noStroke();
-    for(int i = 0; i < coords.size(); i++) {
+    for (int i = 0; i < coords.size(); i++) {
         PVector screenLocation = map.getScreenLocation(coords.get(i));
         p2D.vertex(screenLocation.x, screenLocation.y);
     }
