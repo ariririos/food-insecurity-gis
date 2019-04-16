@@ -12,9 +12,9 @@ class Heatmap {
     cellY = _cellY;
     cellW = _cellW;
     cellH = _cellH;
-    worst = color(200, 0, 0, 75);
-    mid = color(255, 255, 0, 75);
-    best = color(0, 200, 0, 75);
+    best = color(200, 0, 0, 100);
+    mid = color(255, 255, 0, 100);
+    worst = color(0, 200, 0, 100);
     scores = new float[cellX][cellY];
     p = createGraphics(int(cellX*cellW), int(cellY*cellH));
   }
@@ -30,8 +30,8 @@ class Heatmap {
       }
     }
     
-    for(int i = 0; i<cellX; i++){
-      for(int j = 0; j<cellY; j++){
+    for(int i = 0; i<cellX; i++) {
+      for(int j = 0; j<cellY; j++) {
         float val = scores[i][j];
         float newVal = map(val, min, max, 0, 100);
         scores[i][j] = newVal;
@@ -45,9 +45,9 @@ class Heatmap {
       for(int j = 0; j<cellY; j++){
         color col = color(0, 0, 0);
         float val = scores[i][j];
-        if(val < 50) col = lerpColor(worst, mid, val/100);
+        if(val < 50) col = lerpColor(worst, mid, val/50);
         if(val == 50) col = mid;
-        if(val > 50) col = lerpColor(mid, best, val/100);
+        if(val > 50) col = lerpColor(mid, best, (val - 50)/50);
         p.fill(col);
         p.noStroke();
         p.rect(i*cellW, j*cellH, cellW, cellH);

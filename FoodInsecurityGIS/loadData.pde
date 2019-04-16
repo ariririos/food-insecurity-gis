@@ -134,7 +134,7 @@ void allPaths() {
         Path p = new Path(map.getScreenLocation(households.get(i).getFirstCoords()), map.getScreenLocation(foodSources.get(j).getFirstCoords()));
         p.solve(finder);
         paths.add(p);
-        println("added path b/w " + i + " and " + j);
+        // println("added path b/w " + i + " and " + j);
       }
     }
   } 
