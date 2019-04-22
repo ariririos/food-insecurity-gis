@@ -21,24 +21,27 @@ boolean perspective = false;
 Heatmap hm;
 
 void setup() {
-  size(800, 800);
-  //fullScreen();
-  // map = new MercatorMap(width, height, 27.6432, 27.0969, -81.2132, -80.6735, 0);
-  // just city limits:
-  //map = new MercatorMap(width, height, 27.2589, 27.2233, -80.8649, -80.7973, 0);
-  // just city center:
-  //map = new MercatorMap(width, height, 27.6477, 26.9595, -81.4650, -80.2215, 0);
+  size(1000, 800);
+  // approx city limits:
   map = new MercatorMap(width, height, 27.2982, 27.1897, -80.8935, -80.7525, 0);
+  // city center:
+  // map = new MercatorMap(width, height, 27.24707, 27.24007, -80.83601, -80.82432, 0);
+  
   loadData();
   parseData();
+  waysNetwork(ways);
+  finder = new Pathfinder(network);
+  paths = new ArrayList<Path>();
   loadHeatmap();
-  // waysNetwork(ways);
-  // allPaths();
+  hm.printScores();
+  
   //println(paths);
   //xSlider = new HScrollbar(10, 25, 200, 16, 16);
   //ySlider = new HScrollbar(10, 50, 200, 16, 16);
   //zSlider = new HScrollbar(10, 75, 200, 16, 16);
 }
+
+int count = 5;
 
 void draw() {
   background(255, 255, 255);
@@ -54,23 +57,17 @@ void draw() {
     ways.get(i).draw();
   }
   image(hm.p, 0, 0);
-  // for (int i = 0; i < paths.size(); i++) {
-  //  paths.get(i).display(100, 50);
+  paths.get(count).display(lerpColor(#ff0000, #ffff00, map(count, 0, paths.size(), 0, 1)), 1000);
+  count++;
+  if (count == paths.size()) count = 0;
+  delay(2000);
+  // for (int i = count; i < paths.size(); ) {
+  //   count++;
+  //   paths.get(i).display(lerpColor(#ff0000, #ffff00, map(i, 0, paths.size(), 0, 1)), 1000);
+  //   delay(500);
   // }
+  
 
-  /*
-    heatmap usage:
-    hm = new Heatmap(numX, numY, cellW, cellH)
-    float[][] data = new float[numX][numY]
-    hm.scores = data;
-    hm.normalizeScores();
-    hm.draw();
-    
-    data format:
-    [0][0]||[1][0]
-    --------------
-    [0][1]||[1][1]
-  */
 
   //camera();
   //xSlider.update();

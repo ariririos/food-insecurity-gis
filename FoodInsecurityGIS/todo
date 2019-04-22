@@ -7,6 +7,12 @@
 [ ] Heatmaps
     [ ] As separate option
 [ ] 3D??
+[!] Distance-based heatmap
+    [ ] easeIn function for distance since city center is particularly close to food sources (not a linear relationship)
+[ ] Better differentiation
+    [ ] Some ways should be emphasized (probably 441, 70, 98, 710, 78)
+[ ] Is there a way to detect what households are within the viewing frame and only calculate distances/paths for those?
+    [ ] Looks like the heatmap is already based just on which households are within the viewing frame: can we set boundaries (like county line)?
 
 # Graphs
 [ ] Rasterize households into neighborhoods or by no. of units
@@ -21,6 +27,7 @@
     [ ] Free and Reduced Lunch usage
     [ ] Demographics (race, language)
     [ ] Migrant farmworker children population
+    [ ] Family size
 [ ] Data for food sources:
     [ ] (^) food quality metric
     [ ] Hours
@@ -40,3 +47,6 @@
 [ ] stat analysis
     [ ] matching f(x, y) to a student and seeing if they're above some "food insecure" threshold
     [ ] fuzzy it a bit to keep it anonymous
+
+# Code
+[ ] Eventual conversion to p5.js or some java -> js stuff

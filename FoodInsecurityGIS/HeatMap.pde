@@ -12,16 +12,16 @@ class Heatmap {
     cellY = _cellY;
     cellW = _cellW;
     cellH = _cellH;
-    best = color(200, 0, 0, 100);
-    mid = color(255, 255, 0, 100);
-    worst = color(0, 200, 0, 100);
+    best = color(200, 0, 0, 50);
+    mid = color(255, 255, 0, 50);
+    worst = color(0, 200, 0, 50);
     scores = new float[cellX][cellY];
     p = createGraphics(int(cellX*cellW), int(cellY*cellH));
   }
   
   void normalizeScores(){
-    float min = 1000000;
     float max = 0;
+    float min = 10000000;
     for(int i = 0; i<cellX; i++){
       for(int j = 0; j<cellY; j++){
         float val = scores[i][j];
@@ -35,6 +35,14 @@ class Heatmap {
         float val = scores[i][j];
         float newVal = map(val, min, max, 0, 100);
         scores[i][j] = newVal;
+      }
+    }
+  }
+
+  void printScores() {
+    for(int i = 0; i<cellX; i++) {
+      for(int j = 0; j<cellY; j++) {
+        println(scores[i][j]);
       }
     }
   }

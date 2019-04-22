@@ -109,44 +109,47 @@ void parseData() {
 
 
 void waysNetwork(ArrayList<Way> w) {
-  //  An example gridded network of width x height (pixels) and node resolution (pixels)
-  
   int nodeResolution = 100;  // pixels
   int graphWidth = width;   // pixels
   int graphHeight = height; // pixels
   network = new Graph(graphWidth, graphHeight, nodeResolution, w);
 }
 
-void allPaths() {
-  /*  An pathfinder object used to derive the shortest path. */
-  finder = new Pathfinder(network);
+// void allPaths() {
+//   /*  An pathfinder object used to derive the shortest path. */
+//   finder = new Pathfinder(network);
   
-  /*  Generate List of Shortest Paths through our network
-   *  FORMAT 1: Path(float x, float y, float l, float w) <- defines 2 random points inside a rectangle
-   *  FORMAT 2: Path(PVector o, PVector d) <- defined by two specific coordinates
-   */
+//   /*  Generate List of Shortest Paths through our network
+//    *  FORMAT 1: Path(float x, float y, float l, float w) <- defines 2 random points inside a rectangle
+//    *  FORMAT 2: Path(PVector o, PVector d) <- defined by two specific coordinates
+//    */
    
-  paths = new ArrayList<Path>();
-  for (int i = 0; i < households.size(); i++) {
-    int mod = i % 100;
-    if (mod == 0) { // FIXME: only using 1 of every 100 households
-      for (int j = 0; j < foodSources.size(); j++) {
-        Path p = new Path(map.getScreenLocation(households.get(i).getFirstCoords()), map.getScreenLocation(foodSources.get(j).getFirstCoords()));
-        p.solve(finder);
-        paths.add(p);
-        // println("added path b/w " + i + " and " + j);
-      }
-    }
-  } 
-  //finder.display(#ff0000, 1, true);
-}
+//   paths = new ArrayList<Path>();
+//   for (int i = 0; i < households.size(); i++) {
+//     int mod = i % 100;
+//     if (mod == 0) { // FIXME: only using 1 of every 100 households
+//       for (int j = 0; j < foodSources.size(); j++) {
+//         Path p = new Path(map.getScreenLocation(households.get(i).getFirstCoords()), map.getScreenLocation(foodSources.get(j).getFirstCoords()));
+//         p.solve(finder);
+//         paths.add(p);
+//         // println("added path b/w " + i + " and " + j);
+//       }
+//     }
+//   }
+//   //finder.display(#ff0000, 1, true);
+// }
 
 void loadHeatmap() {
-  int blocks = 200;
+  int blocks = 5;
   // numX, numY, width, height
   hm = new Heatmap(blocks, blocks, width / blocks, height / blocks);
-  float[][] dists = calculateAllDistances(blocks, blocks);
-  hm.scores = dists;
+  float[][] scores = new float[blocks][blocks];
+  for (int i = 0; i < blocks; i++) {
+    for (int j = 0; j < blocks; j++) {
+      scores[i][j] = scoreBlock((width / (float) blocks) * i, (height / (float) blocks) * j);
+    }
+  }
+  hm.scores = scores;
   hm.normalizeScores();
   hm.draw();
 }

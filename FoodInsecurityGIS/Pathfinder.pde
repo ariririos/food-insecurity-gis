@@ -16,7 +16,7 @@ class Path {
     straightPath();
   }
   
-  // Constructs an Empy Path with waypoints yet to be included
+  // Constructs an Empty Path with waypoints yet to be included
   Path(PVector o, PVector d) {
     origin = o;
     destination = d;
@@ -49,8 +49,8 @@ class Path {
     // Draw Shortest Path
     //
     noFill();
-    strokeWeight(1);
-    stroke(#00FF00, alpha); // Green
+    strokeWeight(5);
+    stroke(col, alpha); // Green
     PVector n1, n2;
     for (int i=1; i<waypoints.size(); i++) {
       n1 = waypoints.get(i-1);
@@ -62,9 +62,9 @@ class Path {
     //
     strokeWeight(1);
     fill(#FF0000); // Red
-    ellipse(origin.x, origin.y, 1, 1);
+    ellipse(origin.x, origin.y, 5, 5);
     fill(#0000FF); // Blue
-    ellipse(destination.x, destination.y, 1, 1);
+    ellipse(destination.x, destination.y, 5, 5);
     
     strokeWeight(0.1);
   }
