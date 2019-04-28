@@ -265,6 +265,14 @@ class Pathfinder {
     }
   }
   
+  ArrayList<PVector> getAllNodes() {
+    ArrayList<PVector> allNodes = new ArrayList<PVector>();
+    for (int i = 0; i < networkSize; i++) {
+      allNodes.add(network.nodes.get(i).loc);
+    }
+    return allNodes;
+  }
+
   void display(int col, int alpha, boolean showVisited) {
     noFill();
     

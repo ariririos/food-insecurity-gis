@@ -19,13 +19,16 @@ HScrollbar ySlider;
 HScrollbar zSlider;
 boolean perspective = false;
 Heatmap hm;
+Boolean paused = false;
 
 void setup() {
   size(1000, 800);
   // approx city limits:
-  map = new MercatorMap(width, height, 27.2982, 27.1897, -80.8935, -80.7525, 0);
+  // map = new MercatorMap(width, height, 27.2982, 27.1897, -80.8935, -80.7525, 0);
   // city center:
   // map = new MercatorMap(width, height, 27.24707, 27.24007, -80.83601, -80.82432, 0);
+  // southern near 441:
+  map = new MercatorMap(width, height, 27.2248, 27.1967, -80.8551, -80.8083, 0);
   
   loadData();
   parseData();
@@ -33,7 +36,8 @@ void setup() {
   finder = new Pathfinder(network);
   paths = new ArrayList<Path>();
   loadHeatmap();
-  hm.printScores();
+  // hm.printScores();
+  finder.getAllNodes();
   
   //println(paths);
   //xSlider = new HScrollbar(10, 25, 200, 16, 16);
@@ -50,17 +54,17 @@ void draw() {
   for (int i = 0; i < foodSources.size(); i++) {
     foodSources.get(i).draw2D();
   }
-  for (int i = 0; i < households.size(); i++) {
-    households.get(i).draw2D();
-  }
+  // for (int i = 0; i < households.size(); i++) {
+  //   households.get(i).draw2D();
+  // }
   for (int i = 0; i < ways.size(); i++) {
     ways.get(i).draw();
   }
   image(hm.p, 0, 0);
   paths.get(count).display(lerpColor(#ff0000, #ffff00, map(count, 0, paths.size(), 0, 1)), 1000);
-  count++;
+  if (!paused) count++;
   if (count == paths.size()) count = 0;
-  delay(2000);
+  delay(500);
   // for (int i = count; i < paths.size(); ) {
   //   count++;
   //   paths.get(i).display(lerpColor(#ff0000, #ffff00, map(i, 0, paths.size(), 0, 1)), 1000);
@@ -97,10 +101,10 @@ void draw() {
   
 }
 
-//void keyPressed() {
-//  switch (key) {
-//    case 'c':
-//      perspective = !perspective;
-//      break;
-//  }
-//}
+void keyPressed() {
+ switch (key) {
+   case 'c':
+     paused = !paused;
+     break;
+ }
+}

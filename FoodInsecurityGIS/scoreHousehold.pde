@@ -51,7 +51,7 @@ float scoreBlock(float x, float y) {
     }
     float avgPathDist = pathSum / pathDists.size();
     finalScore = avgPathDist * 1.0;
-    println(x, y, finalScore);
+    // println(x, y, finalScore);
     if (Float.isNaN(finalScore)) {
         finalScore = 0.0f;
     }
