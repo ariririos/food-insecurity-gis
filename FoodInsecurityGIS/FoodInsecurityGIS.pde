@@ -10,6 +10,7 @@ JSONObject foodSourcesData;
 JSONArray foodFeatures;
 JSONObject householdsData;
 JSONArray householdFeatures;
+JSONArray incomeData;
 Graph network;
 Pathfinder finder;
 ArrayList<Path> paths;
@@ -54,9 +55,9 @@ void draw() {
   for (int i = 0; i < foodSources.size(); i++) {
     foodSources.get(i).draw2D();
   }
-  // for (int i = 0; i < households.size(); i++) {
-  //   households.get(i).draw2D();
-  // }
+  for (int i = 0; i < households.size(); i++) {
+    households.get(i).draw2D();
+  }
   for (int i = 0; i < ways.size(); i++) {
     ways.get(i).draw();
   }

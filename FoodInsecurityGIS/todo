@@ -16,7 +16,8 @@
 [ ] Pathfinding
     [ ] Introduce a randomness into which path is chosen by similar next node distances
     [ ] Weight major paths to be chosen less randomly (e.g. 441, 70, 98)
-
+    [!] see grace's messages on Pathfinding
+    
 # Graphs
 [ ] Rasterize households into neighborhoods or by no. of units
     [ ] Figure out visualization for rasterized households

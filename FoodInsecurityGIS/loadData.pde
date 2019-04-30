@@ -13,10 +13,12 @@ void loadData() {
    
    householdsData = loadJSONObject("data/households.json");
    householdFeatures = householdsData.getJSONArray("features");
+
+   incomeData = loadJSONArray("data/incomeBrackets.json");
 }
 
 void parseData() {
-  /* Load in all ways */
+  // Load in all ways
   for (int i = 0; i < waysFeatures.size(); i++) {
     JSONObject geometry = waysFeatures.getJSONObject(i).getJSONObject("geometry");
     String type = geometry.getString("type");
@@ -74,7 +76,8 @@ void parseData() {
     //  println(props.getString("name"));
     //}
   }
-  /* Load in all food sources */
+
+  // Load in all food sources
   for (int i = 0; i < foodFeatures.size(); i++) {
       ArrayList<PVector> coords = new ArrayList<PVector>();
       //get the coordinates and iterate through them
@@ -91,7 +94,7 @@ void parseData() {
       foodSources.add(source);
   }
   
-  /* Load in all households */
+  // Load in all households
   for (int i = 0; i < householdFeatures.size(); i++) {
     ArrayList<PVector> coords = new ArrayList<PVector>();
     JSONArray coordinates = householdFeatures.getJSONObject(i).getJSONArray("polygonCoords");
@@ -105,6 +108,14 @@ void parseData() {
     Household house = new Household(coords);
     households.add(house);
   }
+
+  //  Load in income brackets
+  // for (int i = 0; i < incomeData.size(); i++) {
+  //   // Filter for Okeechobee
+  //   if (incomeData[i].getJSONString("countyCode") == "093") {
+
+  //   }
+  // }
 }
 
 
