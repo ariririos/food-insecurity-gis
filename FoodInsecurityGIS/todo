@@ -17,7 +17,8 @@
     [ ] Introduce a randomness into which path is chosen by similar next node distances
     [ ] Weight major paths to be chosen less randomly (e.g. 441, 70, 98)
     [!] see grace's messages on Pathfinding
-    
+[ ] Ways and polygons display
+    [ ] am I displaying MultiPolygons and MultiLineStrings correctly?
 # Graphs
 [ ] Rasterize households into neighborhoods or by no. of units
     [ ] Figure out visualization for rasterized households
@@ -39,7 +40,6 @@
     [ ] Price range
 [ ] Get names/addresses of all buildings
     [ ] Tooltips over individual buildings/areas to show name/address
-
 [ ] pixels per meter per degree
 [ ] meters per degree
     [ ] spherical geometry equation
@@ -51,6 +51,11 @@
 [ ] stat analysis
     [ ] matching f(x, y) to a student and seeing if they're above some "food insecure" threshold
     [ ] fuzzy it a bit to keep it anonymous
+[ ] population change layer
+    [ ] block and block group population change
+    [ ] government assistance block group changes
+    [ ] income block group changes
+[!] filter down blockgroups.geojson to just chobee cause it's way too many MB rn
 
 # Code
 [ ] Eventual conversion to p5.js or some java -> js stuff
