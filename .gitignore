@@ -9,3 +9,5 @@ application.windows64
 application.macosx
 .vscode
 FoodInsecurityGIS/out/*
+node_modules/
+data/blockGroups.json
