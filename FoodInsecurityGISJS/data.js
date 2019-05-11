@@ -1,5 +1,5 @@
-import { promisify } from './promisify.js';
 import FoodSource from './FoodSource.js';
+import Household from './Household.js';
 import PVector from './PVector.js';
 import Way from './Way.js';
 import Heatmap from './Heatmap.js';
@@ -37,35 +37,35 @@ async function loadData() {
 }
 
 async function parseData(data, shapes) {
-    for (let i = 0; i < data.foodFeatures.length; i++) {
-      const coords = [];
-      // get the coordinates and iterate through them
-      const coordinates = data.foodFeatures[i].polygonCoords;
-      for (let j = 0; j < coordinates.length; j++) {
-        const lat = coordinates[j][1];
-        const lon = coordinates[j][0];
-        const coordinate = new PVector(lat, lon);
-        coords.push(coordinate);
-      }
-      const source = new FoodSource(coords, 0.0, window.map); // TODO: choose fill color
-      shapes.foodSources.push(source);
-  }
-  for (let i = 0; i < data.waysFeatures.length; i++) {
-      const { geometry, geometry: { type }} = data.waysFeatures[i];
-      if (type === "LineString") {
-          const coords = [];
-          const { coordinates } = geometry;
-          for (let j = 0; j < coordinates.length; j++) {
-              const lat = coordinates[j][1];
-              const lon = coordinates[j][0];
-              const coordinate = new PVector(lat, lon);
-              coords.push(coordinate);
-          }
-          const way = new Way(coords, window.map);
-          shapes.ways.push(way);
-      }
-  }
-  return { data, shapes };
+    // Parse food sources
+    data.foodFeatures.forEach(sourceData => {
+        const coords = [];
+        const origCoords = sourceData.polygonCoords;
+        origCoords.forEach(coord => coords.push(new PVector(coord.reverse())));
+        const source = new FoodSource(coords, 0.0, window.map); // TODO: choose fill color
+        shapes.foodSources.push(source);
+    });
+    // Parse households
+    data.householdFeatures.forEach(houseData => {
+        const coords = [];
+        const origCoords = houseData.polygonCoords;
+        origCoords.forEach(coord => coords.push(new PVector(coord.reverse())));
+        const house = new Household(coords, window.map);
+        shapes.households.push(house);
+    });
+    // Parse ways
+    data.waysFeatures.forEach(wayData => {
+        const { geometry, geometry: { type }} =  wayData;
+        if (type === 'LineString') {
+            const coords = [];
+            const { coordinates: origCoords } = geometry;
+            origCoords.forEach(coord => coords.push(new PVector(coord.reverse())));
+            const way = new Way(coords, window.map);
+            shapes.ways.push(way); 
+        }
+        // FIXME: still need MultiLineStrings
+    });
+    return { data, shapes };
 }
 
 export default function loadHeatmap({ shapes }) {
@@ -81,7 +81,6 @@ export default function loadHeatmap({ shapes }) {
     hm.scores = scores;
     hm.normalizeScores();
     // hm.bezierScores();
-    console.log(hm.scores);
     hm.draw();
     shapes.hm = hm;
 }

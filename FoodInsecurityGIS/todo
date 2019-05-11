@@ -16,6 +16,8 @@
 [ ] Pathfinding
     [ ] Introduce a randomness into which path is chosen by similar next node distances
     [ ] Weight major paths to be chosen less randomly (e.g. 441, 70, 98)
+[ ] Roads
+    [ ] Assign road weights and visual weighting
 
 # Graphs
 [ ] Rasterize households into neighborhoods or by no. of units
@@ -50,6 +52,9 @@
 [ ] stat analysis
     [ ] matching f(x, y) to a student and seeing if they're above some "food insecure" threshold
     [ ] fuzzy it a bit to keep it anonymous
+[ ] Vehicle mobility data
+    [ ] https://factfinder.census.gov/faces/tableservices/jsf/pages/productview.xhtml?pid=ACS_05_EST_B25044A&prodType=table
+    
 
 # Code
 [ ] Eventual conversion to p5.js or some java -> js stuff

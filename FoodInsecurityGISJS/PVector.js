@@ -1,7 +1,13 @@
 export default class PVector {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        if (y === null || y === undefined) {
+            this.x = x[0];
+            this.y = x[1];
+        }
+        else {
+            this.x = x;
+            this.y = y;
+        }
     }
     rotate(angleInRad) {
         const cs = Math.cos(angleInRad);
