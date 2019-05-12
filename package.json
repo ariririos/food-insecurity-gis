@@ -1,0 +1,23 @@
+{
+  "name": "food-insecurity-gis",
+  "version": "0.0.0",
+  "description": "Food Insecurity GIS Project",
+  "main": "FoodInsecurityGIS/FoodInsecurityGIS.pde",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rioc0719/food-insecurity-gis.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rioc0719/food-insecurity-gis/issues"
+  },
+  "homepage": "https://github.com/rioc0719/food-insecurity-gis#readme",
+  "dependencies": {
+    "csv-parse": "^4.4.1",
+    "promisify": "0.0.3"
+  }
+}

@@ -1,4 +1,6 @@
 import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 MercatorMap map;
 PImage background;
@@ -10,16 +12,21 @@ JSONObject foodSourcesData;
 JSONArray foodFeatures;
 JSONObject householdsData;
 JSONArray householdFeatures;
+JSONArray incomeData;
 Graph network;
 Pathfinder finder;
 ArrayList<Path> paths;
 ArrayList<Way> ways = new ArrayList<Way>();
+ArrayList<CoordinatePolygon> blkGrps = new ArrayList<CoordinatePolygon>();
+JSONObject blkGrpData;
+JSONArray blkGrpFeatures;
 HScrollbar xSlider;
 HScrollbar ySlider;
 HScrollbar zSlider;
 boolean perspective = false;
 Heatmap hm;
 Boolean paused = false;
+Map<String, ArrayList<Float>> incomeBracketsByBlkGrp = new HashMap<String, ArrayList<Float>>();
 
 void setup() {
   size(1000, 800);
@@ -28,8 +35,9 @@ void setup() {
   // city center:
   // map = new MercatorMap(width, height, 27.24707, 27.24007, -80.83601, -80.82432, 0);
   // southern near 441:
-  map = new MercatorMap(width, height, 27.2248, 27.1967, -80.8551, -80.8083, 0);
-  
+  // map = new MercatorMap(width, height, 27.2248, 27.1967, -80.8551, -80.8083, 0);
+  // county:
+  map = new MercatorMap(width, height, 27.6872, 26.9147, -81.5900, -80.3004, 0);
   loadData();
   parseData();
   waysNetwork(ways);
@@ -54,13 +62,16 @@ void draw() {
   for (int i = 0; i < foodSources.size(); i++) {
     foodSources.get(i).draw2D();
   }
-  // for (int i = 0; i < households.size(); i++) {
-  //   households.get(i).draw2D();
-  // }
+  for (int i = 0; i < households.size(); i++) {
+    households.get(i).draw2D();
+  }
   for (int i = 0; i < ways.size(); i++) {
     ways.get(i).draw();
   }
-  image(hm.p, 0, 0);
+  for (int i = 0; i < blkGrps.size(); i++) {
+    blkGrps.get(i).draw();
+  }
+  // image(hm.p, 0, 0);
   paths.get(count).display(lerpColor(#ff0000, #ffff00, map(count, 0, paths.size(), 0, 1)), 1000);
   if (!paused) count++;
   if (count == paths.size()) count = 0;

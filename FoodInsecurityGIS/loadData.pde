@@ -4,7 +4,7 @@ void loadData() {
    // just city limits:
    //background = loadImage("data/city.png");
    //background.resize(width, height);
-   
+  
    waysData = loadJSONObject("data/ways.geojson");
    waysFeatures = waysData.getJSONArray("features");
    
@@ -13,10 +13,15 @@ void loadData() {
    
    householdsData = loadJSONObject("data/households.json");
    householdFeatures = householdsData.getJSONArray("features");
+
+   incomeData = loadJSONArray("data/incomeBrackets.json");
+
+   blkGrpData = loadJSONObject("data/chobeeBlockGroups.geojson");
+   blkGrpFeatures = blkGrpData.getJSONArray("features");
 }
 
 void parseData() {
-  /* Load in all ways */
+  // Load in all ways
   for (int i = 0; i < waysFeatures.size(); i++) {
     JSONObject geometry = waysFeatures.getJSONObject(i).getJSONObject("geometry");
     String type = geometry.getString("type");
@@ -74,7 +79,8 @@ void parseData() {
     //  println(props.getString("name"));
     //}
   }
-  /* Load in all food sources */
+
+  // Load in all food sources
   for (int i = 0; i < foodFeatures.size(); i++) {
       ArrayList<PVector> coords = new ArrayList<PVector>();
       //get the coordinates and iterate through them
@@ -91,7 +97,7 @@ void parseData() {
       foodSources.add(source);
   }
   
-  /* Load in all households */
+  // Load in all households
   for (int i = 0; i < householdFeatures.size(); i++) {
     ArrayList<PVector> coords = new ArrayList<PVector>();
     JSONArray coordinates = householdFeatures.getJSONObject(i).getJSONArray("polygonCoords");
@@ -104,6 +110,55 @@ void parseData() {
     }
     Household house = new Household(coords);
     households.add(house);
+  }
+
+  // Load in income brackets
+  /**
+   * {
+     [gisJoin]: [1%, 10%, ...,  0%]
+   }
+   */
+  
+  for (int i = 0; i < incomeData.size(); i++) {
+    // Filter for Okeechobee
+    JSONObject blkGrp = incomeData.getJSONObject(i);
+    float totalPop = Float.parseFloat(blkGrp.getString("incomeTotal"));
+    if (totalPop == 0.0) continue;
+    ArrayList<Float> incomePercentages = new ArrayList<Float>();
+    if (blkGrp.getString("countyCode").equals("093")) { // TODO: can prob remove now
+      JSONArray incomeBrackets = blkGrp.getJSONArray("incomeBrackets");
+      for (int j = 0; j < incomeBrackets.size(); j++) {
+        println(Float.parseFloat(incomeBrackets.getString(j)) / totalPop);
+        incomePercentages.add(Float.parseFloat(incomeBrackets.getString(j)) / totalPop);
+        println(incomePercentages);
+
+      }
+    }
+    println(incomePercentages);
+    incomeBracketsByBlkGrp.put(blkGrp.getString("gisJoin"), incomePercentages);
+  }
+
+  for (int i = 0; i < blkGrpFeatures.size(); i++) {
+    JSONObject geometry = blkGrpFeatures.getJSONObject(i).getJSONObject("geometry");
+    String type = geometry.getString("type");
+    if (type.equals("Polygon")) {
+      String geoID = blkGrpFeatures.getJSONObject(i).getJSONObject("properties").getString("GISJOIN");
+      // println(geoID);
+      ArrayList<Float> bracket = incomeBracketsByBlkGrp.get(geoID);
+      println("final bracket");
+      println(bracket);
+
+      JSONArray coordinates = geometry.getJSONArray("coordinates").getJSONArray(0);
+      ArrayList<PVector> coords = new ArrayList<PVector>();
+      for (int j = 0; j < coordinates.size(); j++) {
+          float lat = coordinates.getJSONArray(j).getFloat(1);
+          float lon = coordinates.getJSONArray(j).getFloat(0);
+          PVector coordinate = new PVector(lat, lon);
+          coords.add(coordinate);
+        }
+        CoordinatePolygon blkGrp = new CoordinatePolygon(coords, lerpColor(#ff0000, #ffff00, bracket.get(0)));
+        blkGrps.add(blkGrp);
+    }
   }
 }
 
