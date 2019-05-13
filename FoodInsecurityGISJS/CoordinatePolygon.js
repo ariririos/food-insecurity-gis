@@ -6,6 +6,7 @@ export default class CoordinatePolygon {
     }
     draw() {
         window.p.beginShape();
+        window.p.stroke(128);
         window.p.fill(this.fill);
         this.coords.forEach(coord => {
             const screenLocation = this.map.getScreenLocation(coord);
