@@ -37,6 +37,8 @@ async function loadData() {
     const blockData = await loadJSON("data/chobeeBlocks.json");
     data.blockFeatures = blockData;
 
+    data.blockPopData = await loadJSON("data/chobeeBlockPops.json")
+
     return data;
 }
 
@@ -69,6 +71,12 @@ async function parseData(data, shapes) {
         }
         // FIXME: still need MultiLineStrings
     });
+
+    const allBlockPops = [];
+    // Parse block populations
+    Object.values(data.blockPopData).forEach(block => allBlockPops.push(block.popTotal));
+    const maxBlockPop = Math.max(...allBlockPops);
+
     // Parse income brackets
     /**
      * Format: incomeData: {
@@ -121,11 +129,13 @@ async function parseData(data, shapes) {
         shapes.blkGrps.push(blkGrp);
     });
 
+    // Parse block polygons
     data.blockFeatures.forEach(blockData => {
         const { properties: { GISJOIN: gisJoin }, geometry: { coordinates: origCoords }} = blockData;
         const coords = [];
         origCoords[0].forEach(coord => coords.push(new PVector(coord.reverse())));
-        const block = new CoordinatePolygon(coords, window.p.color(0), window.map);
+        const popColor = window.p.lerpColor(window.p.color(255, 0, 0), window.p.color(0, 255, 0), window.p.map(data.blockPopData[gisJoin].popTotal, 0, maxBlockPop, 0, 1));
+        const block = new CoordinatePolygon(coords, popColor, window.map);
         shapes.blocks.push(block);
     });
     return { data, shapes };

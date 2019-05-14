@@ -12,3 +12,4 @@ FoodInsecurityGIS/out/*
 node_modules/*
 data/blockGroups.json
 data/blocks.json
+data/nhgis0004_ds172_2010_block.csv

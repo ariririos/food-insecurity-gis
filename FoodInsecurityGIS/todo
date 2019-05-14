@@ -65,3 +65,4 @@
 
 # Code
 [x] Eventual conversion to p5.js or some java -> js stuff
+[ ] function that takes features array and outputs an array of shapes, i.e. featuresToShapes(featuresArray, shapeConstructor), e.g. featuresToShapes(data.blockFeatures, CoordinatePolygon)
