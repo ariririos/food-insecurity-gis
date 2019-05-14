@@ -11,3 +11,4 @@ application.macosx
 FoodInsecurityGIS/out/*
 node_modules/*
 data/blockGroups.json
+data/blocks.json

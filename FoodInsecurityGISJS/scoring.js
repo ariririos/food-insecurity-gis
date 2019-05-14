@@ -26,7 +26,7 @@ export function scoreBlkGrpsByIncome(data) {
     const incomeAveragesByBlkGrp = {};
     data.incomeData.filter(blkGrp => blkGrp.countyCode === "093").forEach(blkGrp => {
         const totalPop = +blkGrp.incomeTotal;
-        if (totalPop === 0) return incomeAveragesByBlkGrp[blkGrp.gisJoin] = 0;
+        if (totalPop === 0) return incomeAveragesByBlkGrp[blkGrp.gisJoin] = null;
         const incomeAveragesByBracket = [];
         blkGrp.incomeBrackets.forEach((bracketNum, i) => {
             if (+bracketNum === 0) return incomeAveragesByBracket[i] = 0;

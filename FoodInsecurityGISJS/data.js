@@ -34,6 +34,9 @@ async function loadData() {
     const blkGrpData = await loadJSON("data/chobeeBlockGroups.json");
     data.blkGrpFeatures = blkGrpData.features;
 
+    const blockData = await loadJSON("data/chobeeBlocks.json");
+    data.blockFeatures = blockData;
+
     return data;
 }
 
@@ -96,21 +99,34 @@ async function parseData(data, shapes) {
 
     scoreBlkGrpsByIncome(data);
 
-    const maxBlkGrpIncome = Math.max(...Object.values(data.incomeAveragesByBlkGrp));
+    const maxBlkGrpIncome = Math.max(...Object.values(data.incomeAveragesByBlkGrp).filter(val => val));
+    const minBlkGrpIncome = Math.min(...Object.values(data.incomeAveragesByBlkGrp).filter(val => val));
+
+    console.log(minBlkGrpIncome);
 
     // Parse block group polygons
     data.blkGrpFeatures.forEach(blkGrpData => {
         const { properties: { GISJOIN: gisJoin }, geometry: { coordinates: origCoords } } = blkGrpData;
         const coords = [];
         origCoords[0].forEach(coord => coords.push(new PVector(coord.reverse())));
-        let incomeAverage = data.incomeAveragesByBlkGrp[gisJoin];
-        if (incomeAverage === undefined) {
-            console.log('gisJoin not found for block group ' + gisJoin);
-            incomeAverage = 0;
+        const incomeAverage = data.incomeAveragesByBlkGrp[gisJoin];
+        let incomeColor;
+        if (incomeAverage !== null) {
+            incomeColor = window.p.lerpColor(window.p.color(255, 0, 0), window.p.color(0, 255, 0), window.p.map(incomeAverage, minBlkGrpIncome, maxBlkGrpIncome, 0, 1));
         }
-        const incomeColor = window.p.lerpColor(window.p.color(255, 0, 0), window.p.color(0, 255, 0), window.p.map(incomeAverage, 0, maxBlkGrpIncome, 0, 1));
+        else {
+            incomeColor = window.p.color(128);
+        }
         const blkGrp = new CoordinatePolygon(coords, incomeColor, window.map);
         shapes.blkGrps.push(blkGrp);
+    });
+
+    data.blockFeatures.forEach(blockData => {
+        const { properties: { GISJOIN: gisJoin }, geometry: { coordinates: origCoords }} = blockData;
+        const coords = [];
+        origCoords[0].forEach(coord => coords.push(new PVector(coord.reverse())));
+        const block = new CoordinatePolygon(coords, window.p.color(0), window.map);
+        shapes.blocks.push(block);
     });
     return { data, shapes };
 }

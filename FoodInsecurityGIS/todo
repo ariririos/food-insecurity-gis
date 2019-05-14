@@ -21,6 +21,7 @@
     [!] see grace's messages on Pathfinding
 [ ] Ways and polygons display
     [ ] am I displaying MultiPolygons and MultiLineStrings correctly?
+
 # Graphs
 [ ] Rasterize households into neighborhoods or by no. of units
     [ ] Figure out visualization for rasterized households
@@ -59,7 +60,8 @@
     [ ] block and block group population change
     [ ] government assistance block group changes
     [ ] income block group changes
-[!] filter down blockgroups.geojson to just chobee cause it's way too many MB rn
+[x] filter down blockgroups.geojson to just chobee cause it's way too many MB rn
+[ ] Display blocks and block population next
 
 # Code
-[ ] Eventual conversion to p5.js or some java -> js stuff
+[x] Eventual conversion to p5.js or some java -> js stuff
