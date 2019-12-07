@@ -4,6 +4,7 @@ import PVector from './PVector.js';
 import Way from './Way.js';
 import Heatmap from './Heatmap.js';
 import { scoreBlock } from './scoring.js';
+import Graph from './Graph.js';
 
 async function loadJSON(URL) {
     try {
@@ -68,7 +69,8 @@ async function parseData(data, shapes) {
     return { data, shapes };
 }
 
-export default function loadHeatmap({ shapes }) {
+function loadHeatmap(stuff) {
+    const { shapes } = stuff;
     const blocks = 100;
     const hm = new Heatmap(blocks, blocks, window.p.width / blocks, window.p.height / blocks);
     const scores = [];
@@ -83,8 +85,19 @@ export default function loadHeatmap({ shapes }) {
     // hm.bezierScores();
     hm.draw();
     shapes.hm = hm;
+    return stuff;
+}
+
+function waysNetwork({ shapes }) {
+    console.log('Starting ways network');
+    const nodeResolution = 10;
+    const network = new Graph(window.p.width, window.p.height, nodeResolution, shapes.ways, window.map);
+    // const network = new Graph(window.p.width, window.p.height, nodeResolution);
+
+    // network.cullRandom(0.5);
+    shapes.network = network;
 }
 
 export function loadAndParse(status, shapes) {
-    loadData().then(data => parseData(data, shapes)).then(loadHeatmap).then(() => status.doneLoading = true).catch(err => console.error(err));
+    loadData().then(data => parseData(data, shapes)).then(loadHeatmap).then(waysNetwork).then(() => status.doneLoading = true).catch(err => console.error(err));
 }

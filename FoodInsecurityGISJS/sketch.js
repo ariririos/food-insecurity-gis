@@ -11,7 +11,6 @@ const shapes =  {
     foodSources: [],
     households: []
 };
-let hm;
 
 let FoodInsecurityGIS = p => {
     p.setup = () => {
@@ -23,27 +22,30 @@ let FoodInsecurityGIS = p => {
         // const map = new MercatorMap(p.width, p.height, 27.2691, 27.2131, -80.8752, -80.7816, 0); // city limits
         window.map = map;
         loadAndParse(status, shapes);
+        
     }
     p.draw = () => {
         while (!status.doneLoading) {
             return;
         }
         if (!status.initialDraw) {
-            shapes.foodSources.forEach(source => source.draw());
-            shapes.households.forEach(house => house.draw());
-            shapes.ways.forEach(way => way.draw());
-            p.image(shapes.hm.canvas, 0, 0);
+            // shapes.foodSources.forEach(source => source.draw());
+            // shapes.households.forEach(house => house.draw());
+            // shapes.ways.forEach(way => way.draw());
+            // p.image(shapes.hm.canvas, 0, 0);
+            shapes.network.render(0, 255);
+            p.image(shapes.network.img, 0, 0);
             status.initialDraw = true;
         }
     }
-    p.mouseMoved = () => {
-        while (!status.doneLoading) {
-            return;
-        }
-        const currBlockX = Math.floor(p.mouseX / shapes.hm.cellW);
-        const currBlockY = Math.floor(p.mouseY / shapes.hm.cellH);
-        console.log(shapes.hm.prevScores[currBlockX][currBlockY] + "=>" + shapes.hm.scores[currBlockX][currBlockY]);
-    }
+    // p.mouseMoved = () => {
+    //     while (!status.doneLoading) {
+    //         return;
+    //     }
+    //     const currBlockX = Math.floor(p.mouseX / shapes.hm.cellW);
+    //     const currBlockY = Math.floor(p.mouseY / shapes.hm.cellH);
+    //     console.log(shapes.hm.prevScores[currBlockX][currBlockY] + "=>" + shapes.hm.scores[currBlockX][currBlockY]);
+    // }
 };
 
 const myp5 = new p5(FoodInsecurityGIS);

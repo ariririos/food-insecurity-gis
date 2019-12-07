@@ -1,4 +1,9 @@
 export default class Way {
+    /**
+     * 
+     * @param {PVector[]} coords 
+     * @param {MercatorMap} map 
+     */
     constructor(coords, map) {
         this.coords = coords;
         this.stroke = window.p.color(255, 0, 0);

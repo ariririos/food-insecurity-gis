@@ -15,9 +15,9 @@ const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
 (async function getParcelData() {
   let driver = await new Builder().forBrowser('chrome').build();
 
-  let attemptNo = 6;
+  let attemptNo = 4;
   try {
-    for (let i = 17696; i < 20000; i++) { // change i when there's errors
+    for (let i = 25000; i < 30000; i++) { // change i when there's errors
         const currParcelID = polygons[i].properties.PARCELNO;
         await driver.get('http://g4b.okeechobeepa.com/gis/');
         await sleep(500);

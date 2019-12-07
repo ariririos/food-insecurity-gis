@@ -11,3 +11,5 @@ application.macosx
 FoodInsecurityGIS/out/*
 node_modules/*
 data/blockGroups.json
+data/nhgis0004_ds172_2010_block.csv
+data/blocks.json
